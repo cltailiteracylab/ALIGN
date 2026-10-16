@@ -274,4 +274,3 @@ Do not wait until the next weekly meeting if a blocker is preventing progress.
 ## Goal
 
 The goal of this workflow is to allow all sub-project teams to contribute independently while keeping the ALIGN platform integrated, reviewable, and stable.
-```
