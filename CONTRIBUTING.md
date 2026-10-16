@@ -1,4 +1,3 @@
-```markdown
 # Contributing to ALIGN
 
 Thank you for contributing to the ALIGN AI Literacy Platform.
