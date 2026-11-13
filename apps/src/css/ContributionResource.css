@@ -1,0 +1,765 @@
+
+/* ==========================================================
+   CONTRIBUTE A RESOURCE
+   All selectors use the .cr- prefix to prevent conflicts
+   with other components in the ALIGN application.
+   ========================================================== */
+
+
+/* ==========================================================
+   1. THEME VARIABLES & GLOBAL STYLES
+   ========================================================== */
+
+.cr-app {
+  /* Theme colors */
+  --cr-navy: #212b40;
+  --cr-blue: #3b5bdb;
+  --cr-blue-dark: #3350c4;
+  --cr-blue-soft: #eef2ff;
+
+  /* Backgrounds and borders */
+  --cr-bg: #f6f8fc;
+  --cr-border: #e2e8f0;
+
+  /* Text and status colors */
+  --cr-text: #1e293b;
+  --cr-muted: #64748b;
+  --cr-error: #dc2626;
+
+  /* Main layout */
+  display: flex;
+  min-height: 100vh;
+  background: var(--cr-bg);
+  color: var(--cr-text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+/* Typography */
+
+.cr-app h1 {
+  margin: 40px 0 6px;
+  color: var(--cr-text);
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.cr-app h2 {
+  margin: 0 0 16px;
+  color: var(--cr-text);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.cr-app h3 {
+  margin: 0;
+  color: var(--cr-text);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cr-app p {
+  margin: 0;
+}
+
+/* Utility text */
+
+.cr-muted {
+  color: var(--cr-muted);
+  font-size: 14px;
+}
+
+small.cr-muted {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.cr-error {
+  margin-top: 10px;
+  color: var(--cr-error);
+  font-size: 14px;
+}
+
+
+/* ==========================================================
+   2. SIDEBAR & NAVIGATION
+   ========================================================== */
+
+.cr-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 288px;
+  flex-shrink: 0;
+  padding: 32px 24px;
+  background: var(--cr-navy);
+  color: #fff;
+}
+
+/* Logo */
+
+.cr-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 56px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cr-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.cr-logo .cr-square {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+/* Navigation menu */
+
+.cr-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cr-sidebar nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cr-sidebar nav button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cr-sidebar nav button.is-active {
+  background: var(--cr-blue);
+}
+
+/* Sidebar footer and user profile */
+
+.cr-sidebar__footer {
+  margin-top: auto;
+}
+
+.cr-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cr-user strong {
+  display: block;
+  font-size: 14px;
+}
+
+.cr-user small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.cr-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cr-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cr-settings {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+
+/* ==========================================================
+   3. MAIN CONTENT & TOP BAR
+   ========================================================== */
+
+.cr-main {
+  flex: 1;
+  min-width: 0;
+  padding: 32px 40px;
+}
+
+/* Top navigation */
+
+.cr-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--cr-muted);
+}
+
+.cr-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cr-tag {
+  margin-left: 10px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e9f7a8;
+  color: var(--cr-text);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Content cards */
+
+.cr-card {
+  margin-top: 24px;
+  padding: 32px;
+  border: 1px solid var(--cr-border);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--cr-text);
+}
+
+.cr-start {
+  margin-top: 32px;
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.cr-start h2 {
+  margin-bottom: 20px;
+}
+
+
+/* ==========================================================
+   4. CONTRIBUTION PROGRESS STEPPER
+   ========================================================== */
+
+.cr-stepper {
+  display: flex;
+  margin: 32px 0 0;
+  padding: 24px;
+  list-style: none;
+  border: 1px solid var(--cr-border);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.cr-stepper li {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.cr-stepper li:last-child {
+  flex: none;
+}
+
+.cr-stepper__row {
+  display: flex;
+  align-items: center;
+}
+
+/* Step indicator */
+
+.cr-stepper__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: var(--cr-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Connecting line */
+
+.cr-stepper__line {
+  flex: 1;
+  height: 2px;
+  margin: 0 12px;
+  border-radius: 2px;
+  background: #f1f5f9;
+}
+
+/* Step label */
+
+.cr-stepper__label {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--cr-muted);
+}
+
+/* Active step */
+
+.cr-stepper li.is-active .cr-stepper__dot {
+  background: var(--cr-blue);
+  color: #fff;
+}
+
+.cr-stepper li.is-active .cr-stepper__label {
+  color: var(--cr-blue);
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   5. BUTTONS & LINKS
+   ========================================================== */
+
+/* Base button */
+
+.cr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid var(--cr-border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--cr-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cr-btn:hover {
+  background: #f8fafc;
+}
+
+/* Primary button */
+
+.cr-btn--primary {
+  border-color: var(--cr-blue);
+  background: var(--cr-blue);
+  color: #fff;
+}
+
+.cr-btn--primary:hover {
+  background: var(--cr-blue-dark);
+}
+
+/* Full-width button */
+
+.cr-btn--block {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Disabled button */
+
+.cr-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Icon button */
+
+.cr-icon-btn {
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--cr-muted);
+  cursor: pointer;
+}
+
+.cr-icon-btn:hover {
+  color: var(--cr-text);
+}
+
+/* Text links */
+
+.cr-link {
+  display: block;
+  margin: 16px auto 0;
+  border: 0;
+  background: none;
+  color: var(--cr-blue);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cr-link:hover {
+  text-decoration: underline;
+}
+
+.cr-link--light {
+  margin: 0 0 24px;
+  color: #e2e8f0;
+}
+
+/* Footer actions */
+
+.cr-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+
+/* ==========================================================
+   6. FILE UPLOAD & DROPZONE
+   ========================================================== */
+
+/* Upload area */
+
+.cr-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 40px 24px;
+  border: 2px dashed var(--cr-blue);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.cr-dropzone__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #e8edfb;
+  color: var(--cr-blue);
+}
+
+.cr-dropzone .cr-btn {
+  margin-top: 8px;
+}
+
+/* Uploaded file details */
+
+.cr-file {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--cr-border);
+  border-radius: 12px;
+}
+
+.cr-file svg:first-child {
+  color: var(--cr-blue);
+}
+
+.cr-file > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.cr-file strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cr-file small {
+  margin-top: 2px;
+}
+
+/* File ready status */
+
+.cr-ready {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Section divider */
+
+.cr-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  font-size: 12px;
+  color: var(--cr-muted);
+}
+
+.cr-divider::before,
+.cr-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cr-border);
+}
+
+
+/* ==========================================================
+   7. FORM FIELDS & INPUTS
+   ========================================================== */
+
+/* Labels */
+
+.cr-label {
+  display: block;
+  margin: 24px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cr-card h2 + .cr-label,
+.cr-card h2 + .cr-muted + .cr-dropzone {
+  margin-top: 0;
+}
+
+/* Text inputs */
+
+.cr-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--cr-border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--cr-text);
+  font: inherit;
+  font-size: 14px;
+}
+
+.cr-input:focus {
+  outline: 2px solid rgba(59, 91, 219, 0.25);
+  border-color: var(--cr-blue);
+}
+
+.cr-input--short {
+  max-width: 180px;
+}
+
+/* Textarea */
+
+textarea.cr-input {
+  resize: vertical;
+}
+
+/* Link input */
+
+.cr-link-row {
+  display: flex;
+  gap: 12px;
+}
+
+.cr-input-icon {
+  position: relative;
+  flex: 1;
+}
+
+.cr-input-icon svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.cr-input-icon .cr-input {
+  padding-left: 40px;
+}
+
+/* Choice buttons */
+
+.cr-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cr-choice button {
+  padding: 10px 18px;
+  border: 1px solid var(--cr-border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--cr-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cr-choice button:hover {
+  background: #f8fafc;
+}
+
+.cr-choice button.is-selected {
+  border-color: var(--cr-blue);
+  background: var(--cr-blue-soft);
+  color: var(--cr-blue);
+}
+
+
+/* ==========================================================
+   8. RESOURCE BADGES
+   ========================================================== */
+
+/* Base badge */
+
+.cr-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Human-created resource */
+
+.cr-badge--human {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* AI-assisted resource */
+
+.cr-badge--ai_assisted {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* AI-generated resource */
+
+.cr-badge--ai_generated {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+
+/* ==========================================================
+   9. RESOURCE PREVIEW & SUBMISSION
+   ========================================================== */
+
+/* Resource preview */
+
+.cr-preview {
+  padding: 24px;
+  border: 1px solid var(--cr-border);
+  border-radius: 12px;
+}
+
+.cr-preview h3 {
+  margin: 12px 0 4px;
+}
+
+.cr-preview ul {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Submission confirmation */
+
+.cr-done {
+  padding: 32px 0;
+  text-align: center;
+}
+
+.cr-done .cr-btn {
+  margin-top: 20px;
+}
+
+
+/* ==========================================================
+   10. AUTHENTICATION MODAL
+   ========================================================== */
+
+/* Modal overlay */
+
+.cr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+/* Modal content */
+
+.cr-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 20px;
+  background: #fff;
+  color: var(--cr-text);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.cr-modal h2 {
+  margin-right: 28px;
+}
+
+.cr-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.cr-modal .cr-label:first-of-type {
+  margin-top: 8px;
+}
+
+
+/* ==========================================================
+   11. RESPONSIVE DESIGN
+   ========================================================== */
+
+@media (max-width: 800px) {
+  .cr-sidebar {
+    display: none;
+  }
+
+  .cr-main {
+    padding: 20px;
+  }
+
+  .cr-stepper__label {
+    display: none;
+  }
+
+  .cr-link-row {
+    flex-direction: column;
+  }
+}

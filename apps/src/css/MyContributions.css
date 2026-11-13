@@ -1,0 +1,825 @@
+
+/* ==========================================================
+   MY CONTRIBUTIONS
+   All selectors use the .mc- prefix to prevent conflicts
+   with other components in the ALIGN application.
+   ========================================================== */
+
+
+/* ==========================================================
+   1. THEME VARIABLES & GLOBAL STYLES
+   ========================================================== */
+
+.mc-app {
+  /* Theme colors */
+  --mc-navy: #222d41;
+  --mc-blue: #2f63d9;
+
+  /* Text and borders */
+  --mc-text: #253146;
+  --mc-muted: #70819e;
+  --mc-line: #dbe4f2;
+
+  /* Main layout */
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fc;
+  color: var(--mc-text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+/* Global component styling */
+
+.mc-app * {
+  box-sizing: border-box;
+}
+
+.mc-app button {
+  font: inherit;
+  cursor: pointer;
+}
+
+
+/* ==========================================================
+   2. SIDEBAR & NAVIGATION
+   ========================================================== */
+
+.mc-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  min-height: 100vh;
+  flex: 0 0 250px;
+  padding: 30px 22px 23px;
+  background: var(--mc-navy);
+  color: #fff;
+}
+
+/* Logo */
+
+.mc-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 7px 55px;
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mc-icon-square {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.mc-logo-square {
+  width: 25px;
+  height: 25px;
+  flex-basis: 25px;
+  border-radius: 9px;
+}
+
+/* Navigation menu */
+
+.mc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 11px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #fff;
+  font-size: 13px !important;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mc-nav-item:hover {
+  background: #35445d;
+}
+
+.mc-nav-item--active,
+.mc-nav-item--active:hover {
+  background: var(--mc-blue);
+  font-weight: 600 !important;
+}
+
+/* Sidebar footer */
+
+.mc-sidebar-bottom {
+  margin-top: auto;
+}
+
+/* User profile */
+
+.mc-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px 10px;
+}
+
+.mc-avatar {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+  border: 1px solid #6992e8;
+  border-radius: 50%;
+  background: #376bd6;
+  color: #fff;
+  font-weight: 700;
+}
+
+.mc-profile strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mc-profile small {
+  display: block;
+  margin-top: 2px;
+  color: #a9b7d1;
+  font-size: 12px;
+}
+
+/* Settings */
+
+.mc-settings {
+  margin-top: 10px;
+}
+
+
+/* ==========================================================
+   3. MAIN CONTENT & TOP BAR
+   ========================================================== */
+
+.mc-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 1800px;
+  padding: 29px 32px 34px;
+}
+
+/* Top navigation */
+
+.mc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 26px;
+  color: var(--mc-muted);
+  font-size: 12px;
+}
+
+/* AI literacy tag */
+
+.mc-ai-tag {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 6px 15px;
+  border-radius: 18px;
+  background: #e8f677;
+  color: #26333f;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* Institution information */
+
+.mc-institution {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+/* Page title */
+
+.mc-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 24px;
+}
+
+.mc-title-row h1 {
+  margin: 0 0 5px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.mc-title-row p {
+  margin: 0;
+  color: var(--mc-muted);
+  font-size: 13px;
+}
+
+
+/* ==========================================================
+   4. BUTTONS & ACTIONS
+   ========================================================== */
+
+/* Base button */
+
+.mc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid var(--mc-line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--mc-text);
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+}
+
+/* Primary button */
+
+.mc-btn--primary {
+  padding: 13px 22px;
+  border-color: #2863da;
+  background: #2863da;
+  color: #fff;
+}
+
+.mc-btn--primary:hover {
+  background: #2053bb;
+}
+
+/* Secondary button */
+
+.mc-btn--white:hover {
+  background: #f1f5fd;
+}
+
+
+/* ==========================================================
+   5. NOTIFICATIONS & ALERTS
+   ========================================================== */
+
+.mc-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 11px 14px;
+  border: 1px solid #b8cff8;
+  border-radius: 9px;
+  background: #eaf1ff;
+  color: #2857a4;
+}
+
+.mc-notice button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+
+/* ==========================================================
+   6. CONTRIBUTION STATISTICS
+   ========================================================== */
+
+/* Statistics grid */
+
+.mc-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+/* Statistics card */
+
+.mc-stat-card {
+  min-height: 123px;
+  padding: 17px 17px 16px;
+  border: 1px solid var(--mc-line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+/* Card heading */
+
+.mc-stat-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--mc-muted);
+  font-size: 12px;
+}
+
+.mc-stat-heading svg {
+  flex-shrink: 0;
+  color: #2463e9;
+}
+
+/* Statistics value */
+
+.mc-stat-number {
+  display: block;
+  margin: 5px 0 8px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Statistics description */
+
+.mc-stat-card p {
+  margin: 0;
+  color: var(--mc-muted);
+  font-size: 11px;
+}
+
+
+/* ==========================================================
+   7. CONTRIBUTION LIST & FILTERS
+   ========================================================== */
+
+/* List container */
+
+.mc-list-card {
+  overflow: hidden;
+  border: 1px solid var(--mc-line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+/* Filter container */
+
+.mc-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 19px 20px 17px;
+}
+
+/* Filter buttons */
+
+.mc-filter {
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: #f5f7fb;
+  color: #64758f;
+  font-size: 12px !important;
+}
+
+.mc-filter:hover {
+  background: #e8eef9;
+}
+
+/* Active filter */
+
+.mc-filter--active,
+.mc-filter--active:hover {
+  background: #2c65dd;
+  color: #fff;
+  font-weight: 600 !important;
+}
+
+
+/* ==========================================================
+   8. CONTRIBUTIONS TABLE
+   ========================================================== */
+
+/* Scrollable table container */
+
+.mc-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table layout */
+
+.mc-table {
+  width: 100%;
+  min-width: 690px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Table headings */
+
+.mc-table th {
+  padding: 13px 20px;
+  background: #f4f6fb;
+  color: #677b99;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Column widths */
+
+.mc-table th:first-child {
+  width: 47%;
+}
+
+.mc-table th:nth-child(2) {
+  width: 16%;
+}
+
+.mc-table th:nth-child(3) {
+  width: 14%;
+}
+
+.mc-table th:nth-child(4) {
+  width: 23%;
+}
+
+/* Table cells */
+
+.mc-table td {
+  padding: 19px 20px;
+  border-top: 1px solid var(--mc-line);
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.mc-table tbody tr:first-child td {
+  border-top: 0;
+}
+
+/* Resource title */
+
+.mc-table td strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+/* Resource description */
+
+.mc-table td small {
+  display: block;
+  margin-top: 5px;
+  color: var(--mc-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+
+/* ==========================================================
+   9. CONTRIBUTION STATUS BADGES
+   ========================================================== */
+
+/* Base status badge */
+
+.mc-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Draft */
+
+.mc-status--draft {
+  background: #f2f5fa;
+  color: #74839d;
+}
+
+/* Pending review */
+
+.mc-status--pending-review {
+  background: #fff2e2;
+  color: #af680b;
+}
+
+/* Needs revision */
+
+.mc-status--needs-revision {
+  background: #fdecee;
+  color: #c64b54;
+}
+
+/* Approved */
+
+.mc-status--approved {
+  background: #e7f7ed;
+  color: #269056;
+}
+
+
+/* ==========================================================
+   10. TABLE ACTIONS & FOOTER
+   ========================================================== */
+
+/* Action buttons */
+
+.mc-actions {
+  min-width: 150px;
+}
+
+.mc-actions button {
+  display: block;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: #1f60df;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-align: left;
+}
+
+.mc-actions button:hover {
+  text-decoration: underline;
+}
+
+/* Empty table state */
+
+.mc-empty {
+  padding: 30px !important;
+  color: var(--mc-muted);
+  text-align: center;
+}
+
+/* Table footer */
+
+.mc-table-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 19px;
+  border-top: 1px solid var(--mc-line);
+  color: var(--mc-muted);
+  font-size: 11px;
+}
+
+
+/* ==========================================================
+   11. REVIEW FEEDBACK
+   ========================================================== */
+
+/* Feedback container */
+
+.mc-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 22px 20px;
+  border: 1px solid #f9cdd0;
+  border-radius: 16px;
+  background: #fff0f1;
+}
+
+/* Feedback icon */
+
+.mc-feedback > svg {
+  flex-shrink: 0;
+  color: #df4e58;
+}
+
+/* Feedback content */
+
+.mc-feedback-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.mc-feedback-content strong {
+  font-size: 12px;
+}
+
+.mc-feedback-content p {
+  margin: 9px 0 9px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mc-feedback-content small {
+  color: #7687a0;
+  font-size: 11px;
+}
+
+/* Feedback action */
+
+.mc-feedback .mc-btn {
+  align-self: flex-start;
+}
+
+
+/* ==========================================================
+   12. MODAL & FEEDBACK DETAILS
+   ========================================================== */
+
+/* Modal overlay */
+
+.mc-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #15203888;
+}
+
+/* Modal content */
+
+.mc-modal {
+  position: relative;
+  width: 100%;
+  max-width: 510px;
+  padding: 26px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 15px 50px #15203833;
+}
+
+/* Modal headings */
+
+.mc-modal h2 {
+  margin: 0 30px 12px 0;
+  font-size: 22px;
+}
+
+.mc-modal h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+/* Modal description */
+
+.mc-modal > p {
+  color: var(--mc-muted);
+  line-height: 1.5;
+}
+
+/* Modal close button */
+
+.mc-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: 0;
+  background: transparent;
+  color: var(--mc-text);
+}
+
+/* Feedback inside modal */
+
+.mc-modal-feedback {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff0f1;
+  line-height: 1.5;
+}
+
+.mc-modal-feedback p {
+  margin: 6px 0 0;
+}
+
+/* Modal notes */
+
+.mc-modal-note {
+  font-size: 12px;
+}
+
+
+/* ==========================================================
+   13. RESPONSIVE DESIGN
+   ========================================================== */
+
+/* Medium screens */
+
+@media (max-width: 1050px) {
+  .mc-sidebar {
+    width: 215px;
+    flex-basis: 215px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .mc-main {
+    padding: 25px 22px;
+  }
+
+  .mc-stats {
+    gap: 10px;
+  }
+
+  .mc-stat-card {
+    padding: 14px;
+  }
+}
+
+/* Tablets */
+
+@media (max-width: 800px) {
+  .mc-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mc-feedback {
+    flex-wrap: wrap;
+  }
+
+  .mc-feedback .mc-btn {
+    margin-left: 38px;
+  }
+}
+
+/* Mobile screens */
+
+@media (max-width: 630px) {
+  .mc-app {
+    display: block;
+  }
+
+  .mc-sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .mc-logo {
+    margin: 0 0 12px;
+  }
+
+  .mc-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .mc-nav-item {
+    width: auto;
+    padding: 10px;
+  }
+
+  .mc-nav-item .mc-icon-square {
+    display: none;
+  }
+
+  .mc-sidebar-bottom {
+    display: none;
+  }
+
+  .mc-main {
+    padding: 20px 14px;
+  }
+
+  .mc-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mc-title-row h1 {
+    font-size: 26px;
+  }
+
+  .mc-topbar {
+    margin-bottom: 24px;
+  }
+
+  .mc-institution {
+    font-size: 10px;
+  }
+
+  .mc-filters {
+    padding: 12px;
+  }
+
+  .mc-table-footer {
+    flex-wrap: wrap;
+  }
+
+  .mc-feedback .mc-btn {
+    margin-left: 0;
+  }
+}
