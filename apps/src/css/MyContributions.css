@@ -511,25 +511,41 @@
   color: #74839d;
 }
 
-/* Pending review */
+/* Posted */
 
-.mc-status--pending-review {
-  background: #fff2e2;
-  color: #af680b;
+.mc-status--posted {
+  background: #eaf1ff;
+  color: #2857a4;
 }
 
-/* Needs revision */
+/* Verification and likes indicators */
 
-.mc-status--needs-revision {
-  background: #fdecee;
-  color: #c64b54;
+.mc-resource-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 9px;
+  font-size: 11px;
 }
 
-/* Approved */
+/* Blue verified checkbox and label */
 
-.mc-status--approved {
-  background: #e7f7ed;
-  color: #269056;
+.mc-verified-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Thumbs-up icon and like count */
+
+.mc-likes-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--mc-muted);
 }
 
 
@@ -580,60 +596,7 @@
 
 
 /* ==========================================================
-   11. REVIEW FEEDBACK
-   ========================================================== */
-
-/* Feedback container */
-
-.mc-feedback {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 24px;
-  padding: 22px 20px;
-  border: 1px solid #f9cdd0;
-  border-radius: 16px;
-  background: #fff0f1;
-}
-
-/* Feedback icon */
-
-.mc-feedback > svg {
-  flex-shrink: 0;
-  color: #df4e58;
-}
-
-/* Feedback content */
-
-.mc-feedback-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.mc-feedback-content strong {
-  font-size: 12px;
-}
-
-.mc-feedback-content p {
-  margin: 9px 0 9px;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.mc-feedback-content small {
-  color: #7687a0;
-  font-size: 11px;
-}
-
-/* Feedback action */
-
-.mc-feedback .mc-btn {
-  align-self: flex-start;
-}
-
-
-/* ==========================================================
-   12. MODAL & FEEDBACK DETAILS
+   11. RESOURCE DETAILS MODAL
    ========================================================== */
 
 /* Modal overlay */
@@ -691,20 +654,6 @@
   color: var(--mc-text);
 }
 
-/* Feedback inside modal */
-
-.mc-modal-feedback {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #fff0f1;
-  line-height: 1.5;
-}
-
-.mc-modal-feedback p {
-  margin: 6px 0 0;
-}
-
 /* Modal notes */
 
 .mc-modal-note {
@@ -713,7 +662,7 @@
 
 
 /* ==========================================================
-   13. RESPONSIVE DESIGN
+   12. RESPONSIVE DESIGN
    ========================================================== */
 
 /* Medium screens */
@@ -744,14 +693,6 @@
 @media (max-width: 800px) {
   .mc-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .mc-feedback {
-    flex-wrap: wrap;
-  }
-
-  .mc-feedback .mc-btn {
-    margin-left: 38px;
   }
 }
 
@@ -817,9 +758,5 @@
 
   .mc-table-footer {
     flex-wrap: wrap;
-  }
-
-  .mc-feedback .mc-btn {
-    margin-left: 0;
   }
 }
