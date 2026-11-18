@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Educational Game Web Studio</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #070d18;
+      color: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body { display: flex; height: 100vh; margin: 0; }
+    .sidebar {
+      width: 360px;
+      min-width: 320px;
+      padding: 24px;
+      overflow-y: auto;
+      background: #111827;
+      border-right: 1px solid #263244;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    h1 { margin: 0; color: #67d4ff; font-size: 1.35rem; }
+    h2 { margin: 0; font-size: 1rem; }
+    label { display: block; margin-bottom: 7px; color: #a9b8cb; font-size: .88rem; }
+    select, input, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #35445a;
+      border-radius: 7px;
+      color: #f8fafc;
+      background: #1c293b;
+      font: inherit;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    button {
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 13px;
+      color: #fff;
+      background: #1676b8;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    button:hover { background: #218bcf; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .rubric {
+      padding: 14px;
+      border: 1px solid #35445a;
+      border-radius: 8px;
+      background: #1c293b;
+    }
+    .scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .score {
+      padding: 9px 5px;
+      border: 1px solid #35445a;
+      border-radius: 6px;
+      background: #101a29;
+      color: #a9b8cb;
+      text-align: center;
+      font-size: .8rem;
+    }
+    .score strong { display: block; margin-top: 4px; color: #67e8b3; font-size: 1.1rem; }
+    #statusText { margin-top: 8px; color: #a9b8cb; }
+    #critiqueNote { margin-top: 12px; color: #d3deec; font-size: .9rem; }
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .topbar {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px 18px;
+      border-bottom: 1px solid #263244;
+      background: #101a29;
+    }
+    #activeFilename { overflow: hidden; color: #67d4ff; text-overflow: ellipsis; white-space: nowrap; }
+    .rating-bar { display: none; flex: 0 0 auto; align-items: center; gap: 7px; color: #a9b8cb; font-size: .85rem; }
+    .rate-btn { padding: 7px 10px; background: #26364b; font-size: .85rem; }
+    iframe { flex: 1; width: 100%; border: 0; background: #020617; }
+    @media (max-width: 760px) {
+      body { height: auto; min-height: 100vh; flex-direction: column; }
+      .sidebar { width: 100%; min-width: 0; }
+      .main { min-height: 70vh; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .rating-bar { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1>Educational Game Studio</h1>
+    <div>
+      <label for="subject">Subject</label>
+      <select id="subject">
+        <option>Computer Science</option>
+        <option>Biology</option>
+        <option>Chemistry</option>
+        <option>Physics</option>
+        <option>Mathematics</option>
+        <option>Economics</option>
+        <option value="Custom">Custom</option>
+      </select>
+      <input id="customSubject" type="text" placeholder="Enter a subject" hidden>
+    </div>
+    <div>
+      <label for="level">Academic Level</label>
+      <select id="level">
+        <option>High School / Introductory</option>
+        <option>Undergraduate Fluency</option>
+        <option>Advanced / Mastery</option>
+      </select>
+    </div>
+    <div>
+      <label for="prompt">Custom Game Prompt</label>
+      <textarea id="prompt" placeholder="Describe the concept or simulation you want to explore."></textarea>
+    </div>
+    <button id="generateButton" type="button">Generate &amp; Validate Game</button>
+    <section class="rubric" aria-live="polite">
+      <h2>Agent Rubric Scorecard</h2>
+      <div id="statusText">Ready. Enter a prompt to begin.</div>
+      <div class="scores">
+        <div class="score">Content<strong id="contentScore">-</strong></div>
+        <div class="score">Developer<strong id="devScore">-</strong></div>
+        <div class="score">Validator<strong id="validatorScore">-</strong></div>
+      </div>
+      <div id="critiqueNote"></div>
+    </section>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <strong id="activeFilename">Live game preview</strong>
+      <div class="rating-bar" id="ratingBar">
+        <span>RL Reward Feedback:</span>
+        <button class="rate-btn" type="button" data-reward="5">+5</button>
+        <button class="rate-btn" type="button" data-reward="3">+3</button>
+        <button class="rate-btn" type="button" data-reward="1">+1</button>
+      </div>
+    </header>
+    <iframe id="gameFrame" title="Generated educational game"></iframe>
+  </main>
+  <script>
+    let currentEpisodeId = null;
+    const subjectSelect = document.getElementById("subject");
+    const customSubject = document.getElementById("customSubject");
+    const generateButton = document.getElementById("generateButton");
+    const statusText = document.getElementById("statusText");
+    const ratingBar = document.getElementById("ratingBar");
+
+    subjectSelect.addEventListener("change", () => {
+      customSubject.hidden = subjectSelect.value !== "Custom";
+    });
+
+    generateButton.addEventListener("click", async () => {
+      const subject = subjectSelect.value === "Custom"
+        ? customSubject.value.trim()
+        : subjectSelect.value;
+      const prompt = document.getElementById("prompt").value.trim();
+      if (!subject || !prompt) {
+        statusText.textContent = "Enter a subject and game prompt before generating.";
+        return;
+      }
+
+      generateButton.disabled = true;
+      statusText.textContent = "Agents are designing, coding, and validating the game.";
+      try {
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            subject,
+            level: document.getElementById("level").value,
+            prompt
+          })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Game generation failed.");
+
+        currentEpisodeId = result.episode_id;
+        document.getElementById("contentScore").textContent = Number(result.content_score).toFixed(1);
+        document.getElementById("devScore").textContent = Number(result.dev_score).toFixed(1);
+        document.getElementById("validatorScore").textContent = Number(result.validator_score).toFixed(1);
+        document.getElementById("critiqueNote").textContent = result.critique_notes;
+        statusText.textContent = "Status: " + result.status;
+        document.getElementById("activeFilename").textContent = result.filename;
+        document.getElementById("gameFrame").src = "/games/" + encodeURIComponent(result.filename);
+        ratingBar.style.display = "flex";
+      } catch (error) {
+        statusText.textContent = "Error: " + error.message;
+      } finally {
+        generateButton.disabled = false;
+      }
+    });
+
+    ratingBar.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-reward]");
+      if (!button || currentEpisodeId === null) return;
+      try {
+        const response = await fetch("/api/reward", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            episode_id: currentEpisodeId,
+            reward: Number(button.dataset.reward)
+          })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Could not save reward.");
+        statusText.textContent = "Reward saved.";
+      } catch (error) {
+        statusText.textContent = "Error: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

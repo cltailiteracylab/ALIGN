@@ -1,0 +1,5 @@
+langgraph>=1.2.0
+langchain-ollama>=1.1.0
+langchain-core>=1.8.0
+flask>=3.1.0
+docker>=7.2.0

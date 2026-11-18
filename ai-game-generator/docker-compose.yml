@@ -1,0 +1,9 @@
+services:
+  game-factory:
+    build: .
+    container_name: game-factory
+    init: true
+    ipc: host
+    volumes:
+      - .:/app
+    command: ["tail", "-f", "/dev/null"]

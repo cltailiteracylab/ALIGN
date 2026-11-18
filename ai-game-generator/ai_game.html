@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuning Tornado</title>
+<style>
+  body, html { margin: 0; padding: 0; overflow: hidden; }
+  canvas { display: block; }
+  .overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+  .overlay button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<div class="overlay" id="startScreen">
+  <h1>Tuning Tornado</h1>
+  <button id="startButton">START GAME</button>
+</div>
+<div class="overlay" id="gameOverScreen" style="display: none;">
+  <h1>Game Over</h1>
+  <button id="playAgainButton">PLAY AGAIN</button>
+</div>
+<div class="overlay" id="victoryScreen" style="display: none;">
+  <h1>Victory</h1>
+  <button id="playAgainButton">PLAY AGAIN</button>
+</div>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 800;
+  canvas.height = 550;
+
+  const startScreen = document.getElementById('startScreen');
+  const gameOverScreen = document.getElementById('gameOverScreen');
+  const victoryScreen = document.getElementById('victoryScreen');
+  const startButton = document.getElementById('startButton');
+  const playAgainButton = document.getElementById('playAgainButton');
+
+  let gameRunning = false;
+  let score = 0;
+  let lives = 3;
+  let combo = 0;
+  let time = 0;
+  let wave = 1;
+  let trooper = { x: canvas.width / 2, y: canvas.height - 50, width: 50, height: 50, energy: 100 };
+  let dataPoints = [];
+  let obstacles = [];
+  let particles = [];
+  let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  let beep = null;
+  let buzz = null;
+
+  function initAudio() {
+    try {
+      beep = audioContext.createOscillator();
+      beep.type = 'square';
+      beep.frequency.setValueAtTime(800, audioContext.currentTime);
+      beep.connect(audioContext.destination);
+
+      buzz = audioContext.createOscillator();
+      buzz.type = 'sawtooth';
+      buzz.frequency.setValueAtTime(400, audioContext.currentTime);
+      buzz.connect(audioContext.destination);
+    } catch (e) {
+      console.error('Audio initialization failed:', e);
+    }
+  }
+
+  function createDataPoint() {
+    const x = Math.random() * (canvas.width - 20) + 10;
+    const y = Math.random() * (canvas.height / 2) + 10;
+    const color = Math.random() > 0.5 ? 'blue' : 'red';
+    dataPoints.push({ x, y, color });
+  }
+
+  function createObstacle() {
+    const x = Math.random() * (canvas.width - 20) + 10;
+    const y = Math.random() * (canvas.height / 2) + 10;
+    obstacles.push({ x, y, width: 20, height: 20 });
+  }
+
+  function createParticle(x, y, color) {
+    particles.push({ x, y, color, size: Math.random() * 5 + 2, life: 100 });
+  }
+
+  function update() {
+    if (!gameRunning) return;
+
+    trooper.energy -= 0.1;
+    time += 0.1;
+
+    if (trooper.energy <= 0) {
+      gameOver();
+      return;
+    }
+
+    if (dataPoints.length < 10) {
+      createDataPoint();
+    }
+
+    if (Math.random() < 0.05) {
+      createObstacle();
+    }
+
+    dataPoints.forEach(dp => {
+      dp.y += 0.5;
+      if (dp.y > canvas.height) {
+        dataPoints.splice(dataPoints.indexOf(dp), 1);
+      }
+    });
+
+    obstacles.forEach(obstacle => {
+      obstacle.y += 0.5;
+      if (obstacle.y > canvas.height) {
+        obstacles.splice(obstacles.indexOf(obstacle), 1);
+      }
+    });
+
+    particles.forEach(particle => {
+      particle.y -= 0.5;
+      particle.size -= 0.1;
+      particle.life--;
+      if (particle.life <= 0) {
+        particles.splice(particles.indexOf(particle), 1);
+      }
+    });
+
+    if (trooper.energy >= 100) {
+      victory();
+      return;
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'green';
+    ctx.fillRect(0, canvas.height - 10, trooper.energy, 10);
+
+    ctx.fillStyle = 'white';
+    ctx.font = '20px Arial';
+    ctx.fillText(`Score: ${score}`, 10, 30);
+    ctx.fillText(`Lives: ${lives}`, 10, 50);
+    ctx.fillText(`Combo: ${combo}`, 10, 70);
+    ctx.fillText(`Time: ${time.toFixed(1)}s`, 10, 90);
+    ctx.fillText(`Wave: ${wave}`, 10, 110);
+
+    dataPoints.forEach(dp => {
+      ctx.fillStyle = dp.color;
+      ctx.beginPath();
+      ctx.arc(dp.x, dp.y, 10, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    obstacles.forEach(obstacle => {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+    });
+
+    particles.forEach(particle => {
+      ctx.fillStyle = particle.color;
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(render);
+  }
+
+  function handleInput(event) {
+    if (event.type === 'keydown' || event.type === 'click') {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+
+      if (event.type === 'keydown') {
+        if (event.key === 'ArrowLeft' || event.key === 'a') trooper.x -= 10;
+        if (event.key === 'ArrowRight' || event.key === 'd') trooper.x += 10;
+        if (event.key === 'ArrowUp' || event.key === 'w') trooper.y -= 10;
+        if (event.key === 'ArrowDown' || event.key === 's') trooper.y += 10;
+      } else {
+        if (mouseX > trooper.x && mouseX < trooper.x + trooper.width &&
+            mouseY > trooper.y && mouseY < trooper.y + trooper.height) {
+          trooper.x = mouseX - trooper.width / 2;
+          trooper.y = mouseY - trooper.height / 2;
+        }
+      }
+    }
+  }
+
+  function handleCollision() {
+    dataPoints.forEach(dp => {
+      if (dp.x > trooper.x && dp.x < trooper.x + trooper.width &&
+          dp.y > trooper.y && dp.y < trooper.y + trooper.height) {
+        if (dp.color === 'blue') {
+          score += 100;
+          combo++;
+          createParticle(dp.x, dp.y, 'green');
+          if (beep) beep.start();
+        } else {
+          lives--;
+          trooper.energy = 0;
+          createParticle(dp.x, dp.y, 'red');
+          if (buzz) buzz.start();
+        }
+        dataPoints.splice(dataPoints.indexOf(dp), 1);
+      }
+    });
+
+    obstacles.forEach(obstacle => {
+      if (obstacle.x > trooper.x && obstacle.x < trooper.x + trooper.width &&
+          obstacle.y > trooper.y && obstacle.y < trooper.y + trooper.height) {
+        lives--;
+        trooper.energy = 0;
+        createParticle(obstacle.x, obstacle.y, 'red');
+        if (buzz) buzz.start();
+        obstacles.splice(obstacles.indexOf(obstacle), 1);
+      }
+    });
+  }
+
+  function gameOver() {
+    gameRunning = false;
+    gameOverScreen.style.display = 'block';
+  }
+
+  function victory() {
+    gameRunning = false;
+    victoryScreen.style.display = 'block';
+  }
+
+  function resetGame() {
+    gameRunning = true;
+    score = 0;
+    lives = 3;
+    combo = 0;
+    time = 0;
+    wave = 1;
+    trooper.energy = 100;
+    dataPoints = [];
+    obstacles = [];
+    particles = [];
+    gameOverScreen.style.display = 'none';
+    victoryScreen.style.display = 'none';
+    startScreen.style.display = 'none';
+    update();
+    render();
+  }
+
+  startButton.addEventListener('click', resetGame);
+  playAgainButton.addEventListener('click', resetGame);
+
+  document.addEventListener('keydown', handleInput);
+  document.addEventListener('click', handleInput);
+
+  initAudio();
+  resetGame();
+</script>
+</body>
+</html>
