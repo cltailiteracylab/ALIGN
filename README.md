@@ -1,49 +1,28 @@
-# ALIGN AI Literacy Platform
+# ALIGN
 
-## Overview
+React 18 + TypeScript application using Vite as its local development server and build tool.
 
-ALIGN is a shared platform for advancing AI literacy through educational
-resources, classroom AI agents, and AI-assisted learning activity generation.
+## Run locally
 
-## Phase 1
+1. Install the current Node.js LTS release.
+2. Open a terminal in this folder.
+3. Run `npm install`.
+4. Run `npm run dev` and open the localhost URL printed in the terminal.
 
-Phase 1 consists of three main verticals:
+## Demo sign-in
 
-1. AI Literacy Materials Repository
-2. Classroom AI Agent (RAG-based)
-3. Prompt-to-Game / ChatGPT Interface
+Sign-in is intentionally temporary. Any syntactically valid email and password of at least six characters will start an in-memory demo session. The app does not save account names, email addresses, passwords, or signed-in state to browser storage. Refreshing the page ends the session. Old `align.users` and `align.user` local-storage keys from earlier demo versions are cleared on startup.
 
-The platform is being developed collaboratively by multiple research
-sub-project teams.
+The AI Agent's sample chat history remains a separate local-only feature; it is not account or login information.
 
-## Repository Structure
+## Current routes
 
-### apps/
-User-facing platform applications.
+- `/` — Landing page
+- `/repository` — Repository placeholder, ready for the existing materials repository to be connected
+- `/resources/:id` — Resource detail pages
+- `/ai-agent` — AI Agent demo
+- `/community` — Community of Practice
+- `/about` — About ALIGN
+- `/login` and `/signup` — Temporary demo sign-in
 
-### services/
-Backend AI and agent services.
-
-### packages/
-Shared functionality used across the platform, including authentication,
-UI components, and shared data types.
-
-### content/
-AI literacy resource schemas, metadata, and future seed content.
-
-### docs/
-Architecture, API contracts, governance, and project documentation.
-
-## Development Workflow
-
-Do not push directly to `main`.
-
-1. Pull the latest `main`
-2. Create a feature branch
-3. Make your changes
-4. Commit and push your branch
-5. Open a Pull Request
-6. Request review
-7. Merge after approval
-
-See `CONTRIBUTING.md` for details.
+The separate contribution and My Contributions routes are not part of this version; legacy URLs redirect to `/repository`.
