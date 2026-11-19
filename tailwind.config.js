@@ -1,1 +1,0 @@
-export default {content:['./index.html','./src/**/*.{ts,tsx}'],theme:{extend:{colors:{navy:'#16213e',midnight:'#16213e',blue:'#3a5a9b',soft:'#eef1f6',teal:'#1f7a6b',gold:'#c25a2b',clay:'#c25a2b',cream:'#f7f3ee',off:'#f8f8f7',ink:'#263449',mute:'#68778B',line:'#e5e7eb'},fontFamily:{head:['Manrope','Plus Jakarta Sans','sans-serif'],sans:['Inter','sans-serif']}}},plugins:[]}
